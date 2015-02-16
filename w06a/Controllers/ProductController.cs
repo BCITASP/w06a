@@ -18,8 +18,8 @@ namespace w06a.Controllers
         // GET: Product
         public async Task<ActionResult> Index()
         {
-            var products = db.Products.Include(p => p.Category).Include(p => p.Supplier);
-            return View(await products.ToListAsync());
+            var products = await (db.Products.Include(p => p.Category).Include(p => p.Supplier)).ToListAsync();
+            return View(products);
         }
 
         // GET: Product/Details/5
@@ -50,7 +50,8 @@ namespace w06a.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued")] Product product)
+        //public async Task<ActionResult> Create([Bind(Include = "ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued")] Product product)
+        public async Task<ActionResult> Create([Bind(Include = "ProductName,SupplierID,CategoryID,UnitPrice")] Product product)
         {
             if (ModelState.IsValid)
             {
